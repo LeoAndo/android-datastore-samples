@@ -5,7 +5,7 @@ import com.example.protodatastorecomposesample.data.SafeResult
 import com.example.protodatastorecomposesample.data.datastore.PersonDataStore
 import com.example.protodatastorecomposesample.data.safeCall
 import com.example.protodatastorecomposesample.di.IoDispatcher
-import com.example.protodatastorecomposesample.domain.PersonDataRepository
+import com.example.protodatastorecomposesample.domain.repository.PersonDataRepository
 import com.example.protodatastorecomposesample.domain.model.Person
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -17,21 +17,28 @@ internal class PersonDataRepositoryImpl @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val dataStore: PersonDataStore,
 ) : PersonDataRepository {
-    override suspend fun savePersonData(person: Person): SafeResult<Person> {
+    override suspend fun savePersonData(
+        id: String,
+        name: String,
+        height: String,
+        student: Boolean,
+        phoneNumber: String,
+        phoneTypeOrdinal: Int
+    ): SafeResult<String> {
         return safeCall(dispatcher = dispatcher) {
             dataStore.updateData { prefs ->
                 prefs.toBuilder()
-                    .setId(person.id.toInt())
-                    .setName(person.name)
-                    .setHeight(person.height.toDouble())
-                    .setIsStudent(person.student)
+                    .setId(id.toInt())
+                    .setName(name)
+                    .setHeight(height.toDouble())
+                    .setIsStudent(student)
                     .setPhones(
-                        PersonPreferences.PhoneNumber.newBuilder().setNumber(person.phoneNumber)
-                            .setTypeValue(person.phoneTypeOrdinal).build()
+                        PersonPreferences.PhoneNumber.newBuilder().setNumber(phoneNumber)
+                            .setTypeValue(phoneTypeOrdinal).build()
                     )
                     .build()
             }
-            person
+            name
         }
     }
 
@@ -43,7 +50,7 @@ internal class PersonDataRepositoryImpl @Inject constructor(
                 height = it.height.toString(),
                 student = it.isStudent,
                 phoneNumber = it.phones.number,
-                phoneTypeOrdinal = it.phones.type.ordinal
+                phoneTypeName = it.phones.type.name
             )
         }.flowOn(dispatcher)
     }

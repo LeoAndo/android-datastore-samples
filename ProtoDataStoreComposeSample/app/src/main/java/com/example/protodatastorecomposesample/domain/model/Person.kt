@@ -6,5 +6,5 @@ internal data class Person(
     val height: String,
     val student: Boolean,
     val phoneNumber: String,
-    val phoneTypeOrdinal: Int
+    val phoneTypeName: String
 )

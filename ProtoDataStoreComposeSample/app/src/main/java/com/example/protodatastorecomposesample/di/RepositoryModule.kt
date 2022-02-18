@@ -1,7 +1,7 @@
 package com.example.protodatastorecomposesample.di
 
 import com.example.protodatastorecomposesample.data.repository.PersonDataRepositoryImpl
-import com.example.protodatastorecomposesample.domain.PersonDataRepository
+import com.example.protodatastorecomposesample.domain.repository.PersonDataRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -8,8 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.example.protodatastorecomposesample.data.SafeResult
-import com.example.protodatastorecomposesample.domain.PersonDataRepository
-import com.example.protodatastorecomposesample.domain.model.Person
+import com.example.protodatastorecomposesample.domain.repository.PersonDataRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -26,20 +25,34 @@ internal class HomeViewModel @Inject constructor(
             uiState = HomeUiState.Error(throwable.localizedMessage ?: "error!")
         }) {
             repository.observePersonData().collect {
-                uiState = HomeUiState.Data(person = it)
+                uiState = HomeUiState.Data(personName = it.name)
             }
         }
     }
 
-    fun savePersonData(person: Person) {
+    fun savePersonData(
+        id: String,
+        name: String,
+        height: String,
+        student: Boolean,
+        phoneNumber: String,
+        phoneTypeOrdinal: Int
+    ) {
         uiState = HomeUiState.Loading
         viewModelScope.launch {
-            uiState = when (val ret = repository.savePersonData(person)) {
+            uiState = when (val ret = repository.savePersonData(
+                id,
+                name,
+                height,
+                student,
+                phoneNumber,
+                phoneTypeOrdinal
+            )) {
                 is SafeResult.Error -> {
                     HomeUiState.Error(message = ret.errorResult.localizedMessage ?: "error.")
                 }
                 is SafeResult.Success -> {
-                    HomeUiState.Data(person = ret.data)
+                    HomeUiState.Data(personName = ret.data)
                 }
             }
         }
