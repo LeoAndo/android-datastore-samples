@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+option java_package = "com.example.protodatastorecomposesample";
+option java_multiple_files = true;
+
+message PersonPreferences {
+  int32 id = 1;
+  string name = 2;
+  double height = 3;
+  bool is_student = 4;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+  }
+
+  PhoneNumber phones = 5;
+
+  google.protobuf.Timestamp last_updated = 6;
+}

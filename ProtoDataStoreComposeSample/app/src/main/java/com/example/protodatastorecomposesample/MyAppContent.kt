@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.protodatastorecomposesample.ui.home.HomeScreen
 import com.example.protodatastorecomposesample.ui.theme.ProtoDataStoreComposeSampleTheme
 
 @Composable
@@ -64,7 +65,7 @@ private fun MyAppNavigationGraph(
     ) {
 
         composable(route = TopDestinations.HomeRoute.routeName, content = {
-            Text(text = "home")
+            HomeScreen()
         })
 
         composable(route = TopDestinations.AccountRoute.routeName, content = {
