@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.protodatastorecomposesample.PersonPreferences
+import com.example.protodatastorecomposesample.domain.model.Person
 import com.example.protodatastorecomposesample.ui.components.FullScreenLoading
 import com.example.protodatastorecomposesample.ui.theme.ProtoDataStoreComposeSampleTheme
 
@@ -34,10 +35,7 @@ internal fun HomeScreen(
     HomeContent(
         uiState = viewModel.uiState,
         modifier = modifier,
-        onClickSaveButton = { id, name, height, isStudent,
-                              phoneNumber, phoneTypeOrdinal ->
-            viewModel.savePersonData(id, name, height, isStudent, phoneNumber, phoneTypeOrdinal)
-        }
+        onClickSaveButton = viewModel::savePersonData
     )
 }
 
@@ -46,10 +44,7 @@ internal fun HomeScreen(
 internal fun HomeContent(
     uiState: HomeUiState,
     modifier: Modifier = Modifier,
-    onClickSaveButton: (
-        id: String, name: String, height: String, isStudent: Boolean,
-        phoneNumber: String, phoneTypeOrdinal: Int
-    ) -> Unit,
+    onClickSaveButton: (Person) -> Unit,
 ) {
     var id by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
@@ -142,12 +137,14 @@ internal fun HomeContent(
 
             OutlinedButton(onClick = {
                 onClickSaveButton(
-                    id,
-                    name,
-                    height,
-                    isStudent,
-                    phoneNumber,
-                    phoneTypeOrdinal
+                    Person(
+                        id,
+                        name,
+                        height,
+                        isStudent,
+                        phoneNumber,
+                        phoneTypeOrdinal
+                    )
                 )
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Save")
@@ -167,9 +164,9 @@ internal fun HomeContent(
                 HomeUiState.Loading -> {
                     FullScreenLoading()
                 }
-                is HomeUiState.User -> {
+                is HomeUiState.Data -> {
                     Text(
-                        text = uiState.data, modifier = Modifier
+                        text = uiState.person.name, modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentSize()
                     )
@@ -179,7 +176,6 @@ internal fun HomeContent(
             }
         }
     }
-
 }
 
 @Preview(
@@ -193,7 +189,7 @@ fun HomeContent_Preview_Error() {
     ProtoDataStoreComposeSampleTheme {
         HomeContent(
             uiState = HomeUiState.Error(message = "error!!!!!"),
-            onClickSaveButton = { _, _, _, _, _, _ -> },
+            onClickSaveButton = { },
         )
     }
 }
@@ -209,7 +205,7 @@ fun HomeContent_Preview_Loading() {
     ProtoDataStoreComposeSampleTheme {
         HomeContent(
             uiState = HomeUiState.Loading,
-            onClickSaveButton = { _, _, _, _, _, _ -> },
+            onClickSaveButton = { },
         )
     }
 }
@@ -222,10 +218,11 @@ fun HomeContent_Preview_Loading() {
 )
 @Composable
 fun HomeContent_Preview_User() {
+    val person = Person("1", "Yamada", "180.5", true, "080xxxx", 0)
     ProtoDataStoreComposeSampleTheme {
         HomeContent(
-            uiState = HomeUiState.User(data = "user data...."),
-            onClickSaveButton = { _, _, _, _, _, _ -> },
+            uiState = HomeUiState.Data(person = person),
+            onClickSaveButton = { },
         )
     }
 }
