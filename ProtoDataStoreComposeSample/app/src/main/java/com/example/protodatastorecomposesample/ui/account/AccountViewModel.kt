@@ -7,7 +7,7 @@ import javax.inject.Inject
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.example.protodatastorecomposesample.domain.PersonDataRepository
+import com.example.protodatastorecomposesample.domain.repository.PersonDataRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
