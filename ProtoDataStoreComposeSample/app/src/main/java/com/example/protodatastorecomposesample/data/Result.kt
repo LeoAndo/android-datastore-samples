@@ -3,6 +3,7 @@ package com.example.protodatastorecomposesample.data
 import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.lang.Exception
 
 /**
@@ -14,6 +15,7 @@ internal sealed class SafeResult<out R> {
 }
 
 internal sealed class ErrorResult : Exception() {
+    data class IOError(override val message: String? = "IOError") : ErrorResult()
     data class UnknownError(override val message: String? = "UnknownError") :
         ErrorResult()
 }
@@ -45,6 +47,13 @@ internal suspend fun <T> safeCall(
         } catch (e: Throwable) {
             Log.e("safeCall", "error: " + e.localizedMessage)
             when (e) {
+                is IOException -> {
+                    SafeResult.Error(
+                        ErrorResult.IOError(
+                            e.localizedMessage
+                        )
+                    )
+                }
                 else -> {
                     SafeResult.Error(
                         ErrorResult.UnknownError(
