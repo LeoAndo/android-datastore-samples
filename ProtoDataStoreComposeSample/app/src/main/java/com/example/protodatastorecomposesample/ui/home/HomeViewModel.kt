@@ -26,10 +26,6 @@ internal class HomeViewModel @Inject constructor() : ViewModel() {
         phoneNumber: String,
         phoneTypeOrdinal: Int
     ) {
-        uiState = HomeUiState.Loading
-        viewModelScope.launch {
-
-            // uiState = HomeUiState.Error(it.localizedMessage ?: "error.")
-        }
+        // TODO: data storeにデータを登録する.
     }
 }
