@@ -1,6 +1,6 @@
 # overview
 
-Sample for dataStore.
+Sample for [dataStore](https://developer.android.com/topic/libraries/architecture/datastore?hl=ja).
 
 # [development memo](https://github.com/LeoAndo/android-datastore-samples/issues)
 
