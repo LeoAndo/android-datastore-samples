@@ -1,6 +1,8 @@
 buildscript {
     ext {
         compose_version = '1.2.0-alpha03'
+        dataStoreVersion = '1.0.0'
+        protobufVersion = '3.18.0'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
