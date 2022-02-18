@@ -11,9 +11,10 @@ message PersonPreferences {
   bool is_student = 4;
 
   enum PhoneType {
-    MOBILE = 0;
-    HOME = 1;
-    WORK = 2;
+    UNSPECIFIED = 0;
+    MOBILE = 1;
+    HOME = 2;
+    WORK = 3;
   }
 
   message PhoneNumber {
