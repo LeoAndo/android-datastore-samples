@@ -7,7 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object PersonPreferencesSerializer : Serializer<PersonPreferences> {
+internal object PersonPreferencesSerializer : Serializer<PersonPreferences> {
     override val defaultValue: PersonPreferences = PersonPreferences.getDefaultInstance()
 
     @Suppress("BlockingMethodInNonBlockingContext")
