@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Switch
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
@@ -22,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.prefsdatastorecomposesample.data.datastore.PersonPreferences
 import com.example.prefsdatastorecomposesample.domain.model.Person
 import com.example.prefsdatastorecomposesample.ui.components.FullScreenLoading
 import com.example.prefsdatastorecomposesample.ui.theme.PrefsDataStoreComposeSampleTheme
@@ -67,7 +71,7 @@ internal fun HomeContent(
     var phoneNumber by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     var phoneTypeName by remember { mutableStateOf("") }
-    var phoneTypeOrdinal = 0 // by remember { mutableStateOf(PersonPreferences.PhoneType.UNRECOGNIZED.ordinal) }
+    var phoneTypeOrdinal by remember { mutableStateOf(PersonPreferences.PhoneType.UNRECOGNIZED.ordinal) }
 
     Column(
         modifier = modifier
@@ -110,7 +114,7 @@ internal fun HomeContent(
                 label = { Text(text = "phoneNumber") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
-            /*
+
             Box() {
                 OutlinedTextField(
                     value = phoneTypeName,
@@ -149,7 +153,6 @@ internal fun HomeContent(
                     }
                 }
             }
-             */
 
             OutlinedButton(onClick = {
                 onClickSaveButton(
@@ -225,7 +228,6 @@ fun HomeContent_Preview_Loading() {
     }
 }
 
-/*
 @Preview(
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO,
@@ -243,4 +245,3 @@ fun HomeContent_Preview_User() {
         )
     }
 }
- */
