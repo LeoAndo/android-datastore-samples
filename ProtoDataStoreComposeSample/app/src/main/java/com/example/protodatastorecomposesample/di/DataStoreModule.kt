@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
@@ -14,7 +15,9 @@ import javax.inject.Singleton
 internal object DataStoreModule {
     @Singleton
     @Provides
-    fun providePersonDataStore(@ApplicationContext context: Context): PersonDataStore {
-        return PersonDataStore(context)
-    }
+    fun providePersonDataStore(
+        @ApplicationContext context: Context,
+        @IoCoroutineScope scope: CoroutineScope
+    ): PersonDataStore =
+        PersonDataStore(context, scope, "person_prefs.pb")
 }
