@@ -6,24 +6,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-// import androidx.compose.ui.tooling.data.EmptyGroup.data
 import androidx.lifecycle.viewModelScope
-import com.example.prefsdatastorecomposesample.ui.home.HomeUiState
-// import com.example.prefsdatastorecomposesample.data.SafeResult
-// import com.example.prefsdatastorecomposesample.domain.repository.PersonDataRepository
+import com.example.prefsdatastorecomposesample.data.SafeResult
+import com.example.prefsdatastorecomposesample.domain.repository.PersonDataRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    // private val repository: PersonDataRepository,
+    private val repository: PersonDataRepository,
 ) : ViewModel() {
     var uiState by mutableStateOf<HomeUiState>(HomeUiState.Initial)
         private set
 
     init {
-        /*
+
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             uiState = HomeUiState.Error(throwable.localizedMessage ?: "error!")
         }) {
@@ -31,7 +29,7 @@ internal class HomeViewModel @Inject constructor(
                 uiState = HomeUiState.Data(personName = it.name)
             }
         }
-         */
+
     }
 
     fun savePersonData(
@@ -43,7 +41,6 @@ internal class HomeViewModel @Inject constructor(
         phoneTypeOrdinal: Int
     ) {
         uiState = HomeUiState.Loading
-        /*
         viewModelScope.launch {
             uiState = when (val ret = repository.savePersonData(
                 id,
@@ -61,6 +58,5 @@ internal class HomeViewModel @Inject constructor(
                 }
             }
         }
-         */
     }
 }

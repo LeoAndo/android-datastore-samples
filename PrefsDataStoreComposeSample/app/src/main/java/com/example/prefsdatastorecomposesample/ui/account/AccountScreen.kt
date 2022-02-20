@@ -11,6 +11,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.prefsdatastorecomposesample.data.datastore.PersonPreferences
+import com.example.prefsdatastorecomposesample.domain.model.Person
 import com.example.prefsdatastorecomposesample.ui.theme.PrefsDataStoreComposeSampleTheme
 
 @Composable
@@ -86,7 +88,6 @@ fun AccountContent_Preview_Error() {
 )
 @Composable
 fun AccountContent_Preview_User() {
-    /*
     val person =
         Person("1", "Yamada", "180.5", true, "080xxxx", PersonPreferences.PhoneType.HOME.name)
     PrefsDataStoreComposeSampleTheme {
@@ -94,5 +95,4 @@ fun AccountContent_Preview_User() {
             uiState = AccountUiState.Data(person = person),
         )
     }
-     */
 }
