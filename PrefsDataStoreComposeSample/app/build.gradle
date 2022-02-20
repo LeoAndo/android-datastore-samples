@@ -76,4 +76,6 @@ dependencies {
 
     // TODO Sequentially move to Material3.
     implementation "androidx.compose.material:material:1.1.0"
+
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
 }
