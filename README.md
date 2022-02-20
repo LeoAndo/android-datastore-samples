@@ -17,9 +17,14 @@ Sample for [dataStore](https://developer.android.com/topic/libraries/architectur
   - Compose
   - [unit test](https://github.com/LeoAndo/android-datastore-samples/tree/main/ProtoDataStoreComposeSample/app/src/androidTest/java/com/example/protodatastorecomposesample)
 
-# Sample for preferences datastore
+# [Sample for preferences datastore](https://github.com/LeoAndo/android-datastore-samples/tree/main/PrefsDataStoreComposeSample)
 
-will be implement it later.
+- [coding Flow](https://github.com/LeoAndo/android-datastore-samples/pulls?q=is%3Apr+is%3Aclosed+label%3Apreferences_datastore)
+- Features
+  - Material3
+  - Compose
+  - [unit test](https://github.com/LeoAndo/android-datastore-samples/tree/main/PrefsDataStoreComposeSample/app/src/androidTest/java/com/example/prefsdatastorecomposesample)
+
 
 # Capture
 
