@@ -10,17 +10,21 @@ Sample for [dataStore](https://developer.android.com/topic/libraries/architectur
 
 # [Sample for proto datastore](https://github.com/LeoAndo/android-datastore-samples/tree/main/ProtoDataStoreComposeSample)
 
-- test code will be implemented later.
+
 - [coding Flow](https://github.com/LeoAndo/android-datastore-samples/pulls?q=is%3Apr+is%3Aclosed+label%3Aproto_datastore)
-
-## capture
-
-| Pixel 4 OS12 |
-|:---|
-|<img src="https://github.com/LeoAndo/android-datastore-samples/blob/main/ProtoDataStoreComposeSample/capture.gif" width=320 /> |
+- Features
+  - Material3
+  - Compose
+  - [unit test](https://github.com/LeoAndo/android-datastore-samples/tree/main/ProtoDataStoreComposeSample/app/src/androidTest/java/com/example/protodatastorecomposesample)
 
 # Sample for preferences datastore
 
 will be implement it later.
+
+# Capture
+
+| Pixel 4 OS12 |
+|:---|
+|<img src="https://github.com/LeoAndo/android-datastore-samples/blob/main/ProtoDataStoreComposeSample/capture.gif" width=320 /> |
 
 
