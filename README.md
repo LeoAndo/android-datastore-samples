@@ -4,9 +4,11 @@ Sample for [dataStore](https://developer.android.com/topic/libraries/architectur
 
 # [development memo](https://github.com/LeoAndo/android-datastore-samples/issues)
 
-# development environment
-
-<img width="621" alt="スクリーンショット 2022-02-19 3 45 48" src="https://user-images.githubusercontent.com/16476224/154743775-0458a335-79a7-4a0d-ba27-931b58ffc53b.png">
+# development environment (MAD Score)
+![summary](https://user-images.githubusercontent.com/16476224/154850183-de309557-bb83-4469-b052-746d4da892b2.png)
+![kotlin](https://user-images.githubusercontent.com/16476224/154850181-8a1e5387-380c-4c7c-b743-7a7edbb9ae25.png)
+![studio](https://user-images.githubusercontent.com/16476224/154850182-9422f64e-59f4-47a6-b7e0-a73c22e610df.png)
+![jetpack](https://user-images.githubusercontent.com/16476224/154850179-38f09ad3-744f-43f0-866c-cfc889ac102f.png)
 
 # [Sample for proto datastore](https://github.com/LeoAndo/android-datastore-samples/tree/main/ProtoDataStoreComposeSample)
 
