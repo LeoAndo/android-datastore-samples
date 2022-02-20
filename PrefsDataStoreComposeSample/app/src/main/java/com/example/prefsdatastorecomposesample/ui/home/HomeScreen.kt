@@ -1,0 +1,246 @@
+package com.example.prefsdatastorecomposesample.ui.home
+
+import android.content.res.Configuration
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.prefsdatastorecomposesample.domain.model.Person
+import com.example.prefsdatastorecomposesample.ui.components.FullScreenLoading
+import com.example.prefsdatastorecomposesample.ui.theme.PrefsDataStoreComposeSampleTheme
+
+@Composable
+internal fun HomeScreen(
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
+    HomeContent(
+        uiState = viewModel.uiState,
+        modifier = modifier,
+        onClickSaveButton = { id: String,
+                              name: String,
+                              height: String,
+                              student: Boolean,
+                              phoneNumber: String,
+                              phoneTypeOrdinal: Int ->
+            viewModel.savePersonData(id, name, height, student, phoneNumber, phoneTypeOrdinal)
+
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun HomeContent(
+    uiState: HomeUiState,
+    modifier: Modifier = Modifier,
+    onClickSaveButton: (
+        id: String,
+        name: String,
+        height: String,
+        student: Boolean,
+        phoneNumber: String,
+        phoneTypeOrdinal: Int
+    ) -> Unit,
+) {
+    var id by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var height by remember { mutableStateOf("") }
+    var isStudent by remember { mutableStateOf(false) }
+    var phoneNumber by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    var phoneTypeName by remember { mutableStateOf("") }
+    var phoneTypeOrdinal = 0 // by remember { mutableStateOf(PersonPreferences.PhoneType.UNRECOGNIZED.ordinal) }
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            OutlinedTextField(
+                value = id,
+                onValueChange = { id = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = "id") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = "name") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+            )
+            OutlinedTextField(
+                value = height,
+                onValueChange = { height = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = "height") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Switch(checked = isStudent, onCheckedChange = { isStudent = it })
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(text = "is Student?")
+            }
+
+            Text(text = "Phone Number", color = Color.Green)
+            OutlinedTextField(
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = "phoneNumber") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+            )
+            /*
+            Box() {
+                OutlinedTextField(
+                    value = phoneTypeName,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledTextColor = androidx.compose.material.LocalContentColor.current.copy(
+                            LocalContentAlpha.current
+                        )
+                    ),
+                    onValueChange = { },
+                    enabled = false,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = true },
+                    placeholder = { Text(text = "select Phone Type") }
+                )
+                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                    val menuItems = listOf(
+                        PersonPreferences.PhoneType.MOBILE,
+                        PersonPreferences.PhoneType.HOME,
+                        PersonPreferences.PhoneType.WORK,
+                    )
+                    menuItems.forEach {
+                        DropdownMenuItem(
+                            text = { Text(it.name) },
+                            onClick = {
+                                phoneTypeName = it.name
+                                phoneTypeOrdinal = it.ordinal
+                                expanded = false
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Outlined.Phone,
+                                    contentDescription = "phone type: ${it.name}"
+                                )
+                            })
+                    }
+                }
+            }
+             */
+
+            OutlinedButton(onClick = {
+                onClickSaveButton(
+                    id,
+                    name,
+                    height,
+                    isStudent,
+                    phoneNumber,
+                    phoneTypeOrdinal
+
+                )
+            }, modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Save")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Column {
+            when (uiState) {
+                is HomeUiState.Error -> {
+                    Text(
+                        text = uiState.message, modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize()
+                    )
+                }
+                HomeUiState.Loading -> {
+                    FullScreenLoading()
+                }
+                is HomeUiState.Data -> {
+                    Text(
+                        text = uiState.personName, modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize()
+                    )
+                }
+                HomeUiState.Initial -> {
+                }
+            }
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    device = Devices.PIXEL_4,
+    showSystemUi = true
+)
+@Composable
+fun HomeContent_Preview_Error() {
+    PrefsDataStoreComposeSampleTheme {
+        HomeContent(
+            uiState = HomeUiState.Error(message = "error!!!!!"),
+            onClickSaveButton = { _, _, _, _, _, _ -> },
+        )
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    device = Devices.PIXEL_4,
+    showSystemUi = true
+)
+@Composable
+fun HomeContent_Preview_Loading() {
+    PrefsDataStoreComposeSampleTheme {
+        HomeContent(
+            uiState = HomeUiState.Loading,
+            onClickSaveButton = { _, _, _, _, _, _ -> },
+        )
+    }
+}
+
+/*
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    device = Devices.PIXEL_4,
+    showSystemUi = true
+)
+@Composable
+fun HomeContent_Preview_User() {
+    val person =
+        Person("1", "Yamada", "180.5", true, "080xxxx", PersonPreferences.PhoneType.HOME.name)
+    PrefsDataStoreComposeSampleTheme {
+        HomeContent(
+            uiState = HomeUiState.Data(personName = "Yamada"),
+            onClickSaveButton = { _, _, _, _, _, _ -> },
+        )
+    }
+}
+ */
