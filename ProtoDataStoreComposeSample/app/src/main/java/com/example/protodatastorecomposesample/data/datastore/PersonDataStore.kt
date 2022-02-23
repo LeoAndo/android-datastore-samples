@@ -9,9 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
-import javax.inject.Inject
 
-internal class PersonDataStore @Inject constructor(
+internal class PersonDataStore constructor(
     private val context: Context, scope: CoroutineScope, fileName: String
 ) : DataStore<PersonPreferences> {
 
@@ -25,7 +24,7 @@ internal class PersonDataStore @Inject constructor(
         get() = context.dataStore.data.catch { exception ->
             // dataStore.data throws an IOException when an error is encountered when reading data
             if (exception is IOException) {
-                Log.e("PersonDataRepositoryImpl", "error: ", exception)
+                Log.e("PersonDataStore", "error: ", exception)
                 emit(PersonPreferences.getDefaultInstance())
             } else {
                 throw exception

@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import java.io.File
 import javax.inject.Inject
 
-internal class PersonPreferences @Inject constructor(
+internal class PersonPreferences constructor(
     scope: CoroutineScope, produceFile: File
 ) {
     val dataStore = PreferenceDataStoreFactory.create(
